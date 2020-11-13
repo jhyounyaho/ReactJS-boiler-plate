@@ -1,6 +1,13 @@
 const express = require('express') // npm install express --save 로 다운받았던 express
 const app = express() // express app create  
 const port = 5000 // back server  
+const bodyParser = require('body-parser');
+const { User } = require('./models/User');
+
+// application/x-www-form=urlencoded 형태를 분석해서 가져옴
+app.use(bodyParser.urlencoded({ extended: true }));
+// application/json 형태를 분석해서 가져옴 
+app.use(bodyParser.json());
 
 const mongoose = require('mongoose');
 // 몽고DB 연결  
@@ -15,6 +22,20 @@ mongoose.connect('mongodb+srv://jhyounyaho:abcd1234@youtube.4iwse.mongodb.net/<d
 // app 경로가 http://localhost:5000 일때 스크린에 노출되는 코드 
 app.get('/', (req, res) => {
   res.send('Hello World! node js! ')
+})
+
+// 회원가입을 위한 router 
+app.post('/register', (req, res) => {
+  // 회원 가입 할때 필요한 정보들을 bodyParser를 이용하여 client에서 가져오면 DB에 넣어준다.
+  const user = new User(req.body);
+
+  // save - mongoDB method 
+  user.save((err, doc) => {
+    // json 형식으로 보내준다.
+    if (err) return res.json({ success: false, err })
+
+    return res.status(200).json({ success: true })
+  });
 })
 
 // app 이 5000 서버 연결이 되면 실행하는 코드 
