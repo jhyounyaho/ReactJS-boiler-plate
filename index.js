@@ -3,6 +3,7 @@ const app = express() // express app create
 const port = 5000 // back server  
 const bodyParser = require('body-parser');
 const { User } = require('./models/User');
+const config = require('./config/key');
 
 // application/x-www-form=urlencoded 형태를 분석해서 가져옴
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -11,7 +12,7 @@ app.use(bodyParser.json());
 
 const mongoose = require('mongoose');
 // 몽고DB 연결  
-mongoose.connect('mongodb+srv://jhyounyaho:abcd1234@youtube.4iwse.mongodb.net/<dbname>?retryWrites=true&w=majority', {
+mongoose.connect(config.mongoURI, {
   useNewUrlParser: true, 
   useUnifiedTopology: true, 
   useCreateIndex: true,
@@ -21,7 +22,7 @@ mongoose.connect('mongodb+srv://jhyounyaho:abcd1234@youtube.4iwse.mongodb.net/<d
 
 // app 경로가 http://localhost:5000 일때 스크린에 노출되는 코드 
 app.get('/', (req, res) => {
-  res.send('Hello World! node js! ')
+  res.send('Hello World! node js! nodemon! ')
 })
 
 // 회원가입을 위한 router 
