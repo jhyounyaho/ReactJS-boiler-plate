@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const mongoose = require('mongoose');
+const { mongoURI } = require('./config/dev');
 // 몽고DB 연결  
 mongoose.connect(config.mongoURI, {
   useNewUrlParser: true, 
@@ -27,7 +28,7 @@ app.get('/', (req, res) => {
 
 // 회원가입을 위한 router 
 app.post('/register', (req, res) => {
-  // 회원 가입 할때 필요한 정보들을 bodyParser를 이용하여 client에서 가져오면 DB에 넣어준다.
+  // 회원 가입 할때 필요한 정보들을 bodyParser를 이용하여 client에서 JSON형식으로 가져오면 DB에 넣어준다.
   const user = new User(req.body);
 
   // save - mongoDB method 
