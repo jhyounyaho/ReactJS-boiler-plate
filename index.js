@@ -40,6 +40,36 @@ app.post('/register', (req, res) => {
   });
 })
 
+// 로그인을 위한 router 
+app.post('/login', (req, res) => {
+  // DB에서 요청한 e-mail(key) 찾기
+  // findOne() - mongoDB method 
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user) {
+      return res.json({
+        loginSuccess: false,
+        message: '제공된 email에 해당하는 유저가 없습니다.'
+      })
+    }
+    // DB에서 요청한 e-mail 이 있다면 pwd 같은지 확인
+    user.comparePassword(res.body.password, (err, isMatch) => {
+      if (!isMatch) {
+        return res.json({
+          loginSuccess: false,
+          messange: '비밀번호가 틀렸습니다.'
+        })
+      }
+
+      // pwd까지 같다면 Token 생성  
+      user.generateToken((err, user) => {
+
+      })
+    })
+  })
+
+
+})
+
 // app 이 5000 서버 연결이 되면 실행하는 코드 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

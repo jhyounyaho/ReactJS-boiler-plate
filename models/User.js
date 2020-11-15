@@ -37,20 +37,35 @@ const userSchema = mongoose.Schema({
 userSchema.pre('save', function(next) {
   const user = this;
   // password 값이 변경될때만 암호화 진행 
-  if(user.isModified('password')) {
+  if (user.isModified('password')) {
     // Salt 생성 
     bcrypt.genSalt(saltRounds, function(err, salt) {
-      if(err) return next(err);
+      if (err) return next(err);
       // user.password 암호화되기 전 pwd 
       bcrypt.hash(user.password, salt, function(err, hash) {
-        if(err) return next(err);
+        if (err) return next(err);
         // 암호화된 비밀번호 hash 값을 넣어준다.
-        user.password = hash
-        next()
+        user.password = hash;
+        next();
       });
     })
+  } else {
+    next();
   }
 })
+
+userSchema.methods.comparePassword = function(plainPassword, cb) {
+  /*
+    plainPassword = 12345  
+    mongoDB 암호화된 pwd $2b$10$QU.OS0aLcWyEEVEKc93ciOUc0arDw3aPd5z29ll4S820jUx/pWQWS
+    가 같은지 비교하기 위해서는 plainPassword를 암호화시켜 암호화된 pwd와 비교해줘야한다.
+    -> 암호화 된 pwd를 복호화 할 수 없다. 
+  */
+  bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
+    if (err) return cb(err),
+    cb(null, isMatch)
+  })
+}
 
 // 스키마를 모델로 감싸준다.
 const User = mongoose.model('User', userSchema);
