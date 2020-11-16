@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // 암호화하는 salt 자릿수  
+const jwt = require('jsonwebtoken');
 
 const userSchema = mongoose.Schema({
   name: {
@@ -39,10 +40,10 @@ userSchema.pre('save', function(next) {
   // password 값이 변경될때만 암호화 진행 
   if (user.isModified('password')) {
     // Salt 생성 
-    bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.genSalt(saltRounds, (err, salt) => {
       if (err) return next(err);
       // user.password 암호화되기 전 pwd 
-      bcrypt.hash(user.password, salt, function(err, hash) {
+      bcrypt.hash(user.password, salt, (err, hash) => {
         if (err) return next(err);
         // 암호화된 비밀번호 hash 값을 넣어준다.
         user.password = hash;
@@ -61,9 +62,22 @@ userSchema.methods.comparePassword = function(plainPassword, cb) {
     가 같은지 비교하기 위해서는 plainPassword를 암호화시켜 암호화된 pwd와 비교해줘야한다.
     -> 암호화 된 pwd를 복호화 할 수 없다. 
   */
-  bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
-    if (err) return cb(err),
+  bcrypt.compare(plainPassword, this.password, (err, isMatch) => {
+    if(err) return cb(err)
     cb(null, isMatch)
+  })
+}
+
+userSchema.methods.generateToken = function(cb) {
+  const user = this;
+
+  // jsonwebtoken을 이용해서 token 생성하기 
+  const token = jwt.sign(user._id.toHexString(), 'secretToken');
+  //`${user._id}secretToken` = token;
+  user.token = token; 
+  user.save((err, user) => {
+    if(err) return cb(err)
+    cb(null, user)
   })
 }
 

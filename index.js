@@ -3,12 +3,14 @@ const app = express() // express app create
 const port = 5000 // back server  
 const bodyParser = require('body-parser');
 const { User } = require('./models/User');
+const cookieParser = require('cookie-parser');
 const config = require('./config/key');
 
 // application/x-www-form=urlencoded 형태를 분석해서 가져옴
 app.use(bodyParser.urlencoded({ extended: true }));
 // application/json 형태를 분석해서 가져옴 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 const mongoose = require('mongoose');
 const { mongoURI } = require('./config/dev');
@@ -52,7 +54,7 @@ app.post('/login', (req, res) => {
       })
     }
     // DB에서 요청한 e-mail 이 있다면 pwd 같은지 확인
-    user.comparePassword(res.body.password, (err, isMatch) => {
+    user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch) {
         return res.json({
           loginSuccess: false,
@@ -62,12 +64,20 @@ app.post('/login', (req, res) => {
 
       // pwd까지 같다면 Token 생성  
       user.generateToken((err, user) => {
+        if (err) {
+          return res.status(400).send(err);
+        }
 
+        // 토큰을 저장한다 where? cookie, localStorage   
+        res.cookie('x_auth', user.token)
+          .status(200)
+          .json({
+            loginSuccess: true,
+            userId: user._id
+          })
       })
     })
   })
-
-
 })
 
 // app 이 5000 서버 연결이 되면 실행하는 코드 
