@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const { User } = require('./models/User');
 const cookieParser = require('cookie-parser');
 const config = require('./config/key');
+const { auth } = require('./middleware/auth');
 
 // application/x-www-form=urlencoded 형태를 분석해서 가져옴
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,6 +15,7 @@ app.use(cookieParser());
 
 const mongoose = require('mongoose');
 const { mongoURI } = require('./config/dev');
+
 // 몽고DB 연결  
 mongoose.connect(config.mongoURI, {
   useNewUrlParser: true, 
@@ -29,7 +31,7 @@ app.get('/', (req, res) => {
 })
 
 // 회원가입을 위한 router 
-app.post('/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
   // 회원 가입 할때 필요한 정보들을 bodyParser를 이용하여 client에서 JSON형식으로 가져오면 DB에 넣어준다.
   const user = new User(req.body);
 
@@ -43,7 +45,7 @@ app.post('/register', (req, res) => {
 })
 
 // 로그인을 위한 router 
-app.post('/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
   // DB에서 요청한 e-mail(key) 찾기
   // findOne() - mongoDB method 
   User.findOne({ email: req.body.email }, (err, user) => {
@@ -64,7 +66,7 @@ app.post('/login', (req, res) => {
 
       // pwd까지 같다면 Token 생성  
       user.generateToken((err, user) => {
-        if (err) {
+        if(err) {
           return res.status(400).send(err);
         }
 
@@ -79,6 +81,36 @@ app.post('/login', (req, res) => {
     })
   })
 })
+
+// 로그인을 위한 router 
+// auth 미들웨어 callback function 받기 전에 실행  
+app.get('/api/users/auth', auth, (req, res) => {
+  // 여기까지 미들웨어를 통과해 왔다는 얘기는 Authentication 이 true 라는 말  
+  // 정책 role = 0 // 일반유저, != 0 //관리자 
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true, // 정책에 따라 바뀔 수 있음
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    image: req.user.image
+  })
+}) 
+
+// 로그아웃을 위한 router 
+// auth 사용이유 = 로그아웃은 로그인상태임으로 auth 사용 
+app.get('/api/users/logout', auth, (req, res) => {
+  User.findOneAndUpdate({ _id: req.user._id }, 
+    // 토큰을 지워준다. 토큰값이 있을 경우 = 로그인, 없을 경우 = 로그아웃  
+    { token: '' }, (err, user) => {
+      if (err) return res.json({ success: false, err })
+      return res.status(200).send({
+        success: true
+      })
+    })
+}) 
 
 // app 이 5000 서버 연결이 되면 실행하는 코드 
 app.listen(port, () => {
