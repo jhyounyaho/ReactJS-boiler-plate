@@ -12,6 +12,7 @@ npm install nodemon --save-dev
 npm install bcrypt --save  
 npm install jsonwebtoken --save  
 npm install cookie-parser --save  
+npm install concurrently --save  
 npm run start // node로 index.js 실행  
 npm run backend // nodemon으로 index.js 실행
 
@@ -60,20 +61,36 @@ monghDB
 
 ### 로그아웃 API
 
-![logout](https://user-images.githubusercontent.com/42309919/100091225-ae0da000-2e97-11eb-97c2-9b7f111513db.PNG)                
+![logout](https://user-images.githubusercontent.com/42309919/100091225-ae0da000-2e97-11eb-97c2-9b7f111513db.PNG)  
 -> 로그아웃시 token = '' 확인 (postman으로 test)
-                
-## HTTP                
-![login](https://user-images.githubusercontent.com/42309919/100353565-0bd5ef80-3032-11eb-9884-9527bc1efcb8.PNG)     
-                       
-## CORS 이슈, Proxy 설정                        
-![cors err](https://user-images.githubusercontent.com/42309919/100356352-7426d000-3036-11eb-820a-53c1d62a7135.PNG)                       
-server http://localhost:5000                       
-client http://localhost:3000                       
-=> 다른 port 로 인해 이슈 발생                        
-![cors issue1](https://user-images.githubusercontent.com/42309919/100356349-72f5a300-3036-11eb-978f-bc128171e3a0.PNG)                       
-![cors issue2](https://user-images.githubusercontent.com/42309919/100356354-7426d000-3036-11eb-98b2-cdaead332023.PNG)                       
-                                  
+
+## HTTP
+
+![login](https://user-images.githubusercontent.com/42309919/100353565-0bd5ef80-3032-11eb-9884-9527bc1efcb8.PNG)
+
+## CORS 이슈, Proxy 설정
+
+![cors err](https://user-images.githubusercontent.com/42309919/100356352-7426d000-3036-11eb-820a-53c1d62a7135.PNG)  
+server http://localhost:5000  
+client http://localhost:3000  
+=> 다른 port 로 인해 이슈 발생  
+![cors issue1](https://user-images.githubusercontent.com/42309919/100356349-72f5a300-3036-11eb-978f-bc128171e3a0.PNG)  
+![cors issue2](https://user-images.githubusercontent.com/42309919/100356354-7426d000-3036-11eb-98b2-cdaead332023.PNG)
+
+### proxy server 기능
+
+1. IP를 proxy server 에서 임의로 바꿀수있다. 따라서 인터넷에서는 접근하는 사람의 IP를 모르게 된다.
+2. 보내는 데이터도 임의로 바꿀 수 있다.
+
+### proxy server 사용하는 이유
+
+1. 회사에서 직원들이나 집안에서 아이들 인터넷 사용 제어
+2. cash를 이용해 더 빠른 인터넷 이용 제공
+3. 더 나은 보안 제공
+4. 이용 제한된 사이트 접근 가능
+
+## Concurrently를 이용해서 프론트, 백 서버 한번에 켜기
+
 ## boiler-plate 개발 관련 이론
 
 ### create-react-app
