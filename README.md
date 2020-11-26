@@ -63,15 +63,15 @@ monghDB
                 
 ## HTTP                
 ![login](https://user-images.githubusercontent.com/42309919/100353565-0bd5ef80-3032-11eb-9884-9527bc1efcb8.PNG)     
-
-## CORS 이슈, Proxy 설정 
-server http://localhost:5000
-client http://localhost:3000
-=> 다른 port 로 인해 이슈 발생 
-![cors issue1](https://user-images.githubusercontent.com/42309919/100356349-72f5a300-3036-11eb-978f-bc128171e3a0.PNG)
-![cors issue2](https://user-images.githubusercontent.com/42309919/100356354-7426d000-3036-11eb-98b2-cdaead332023.PNG)
-
-                
+                       
+## CORS 이슈, Proxy 설정                        
+![cors err](https://user-images.githubusercontent.com/42309919/100356352-7426d000-3036-11eb-820a-53c1d62a7135.PNG)                       
+server http://localhost:5000                       
+client http://localhost:3000                       
+=> 다른 port 로 인해 이슈 발생                        
+![cors issue1](https://user-images.githubusercontent.com/42309919/100356349-72f5a300-3036-11eb-978f-bc128171e3a0.PNG)                       
+![cors issue2](https://user-images.githubusercontent.com/42309919/100356354-7426d000-3036-11eb-98b2-cdaead332023.PNG)                       
+                                  
 ## boiler-plate 개발 관련 이론
 
 ### create-react-app
