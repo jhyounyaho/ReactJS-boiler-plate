@@ -30,6 +30,8 @@ app.get('/', (req, res) => {
   res.send('Hello World! node js! nodemon! ')
 })
 
+app.get('/api/hello', (req, res) => res.send('Hello World!~~ '))
+
 // 회원가입을 위한 router 
 app.post('/api/users/register', (req, res) => {
   // 회원 가입 할때 필요한 정보들을 bodyParser를 이용하여 client에서 JSON형식으로 가져오면 DB에 넣어준다.
