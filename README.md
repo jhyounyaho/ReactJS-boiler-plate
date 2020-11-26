@@ -58,9 +58,12 @@ monghDB
 
 ### 로그아웃 API
 
-![logout](https://user-images.githubusercontent.com/42309919/100091225-ae0da000-2e97-11eb-97c2-9b7f111513db.PNG)  
+![logout](https://user-images.githubusercontent.com/42309919/100091225-ae0da000-2e97-11eb-97c2-9b7f111513db.PNG)                
 -> 로그아웃시 token = '' 확인 (postman으로 test)
-
+                
+## HTTP                
+![login](https://user-images.githubusercontent.com/42309919/100353565-0bd5ef80-3032-11eb-9884-9527bc1efcb8.PNG)                
+                
 ## boiler-plate 개발 관련 이론
 
 ### create-react-app
