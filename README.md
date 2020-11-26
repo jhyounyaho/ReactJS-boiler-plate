@@ -19,6 +19,8 @@ npm run backend // nodemon으로 index.js 실행
 
 npx create-react-app .
 npm install react-router-dom --save
+npm install axios --save
+npm install http-proxy-middleware --save
 
 ## 디렉토리
 
