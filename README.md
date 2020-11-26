@@ -14,7 +14,11 @@ npm install jsonwebtoken --save
 npm install cookie-parser --save  
 npm run start // node로 index.js 실행  
 npm run backend // nodemon으로 index.js 실행
-npx create-react-app . // client directory 에 설치
+
+### client directory
+
+npx create-react-app .
+npm install react-router-dom --save
 
 ## 디렉토리
 
