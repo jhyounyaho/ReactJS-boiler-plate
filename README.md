@@ -136,6 +136,7 @@ dispatch 한테 어떻게 function을 받는지 방법 알려줌
 dispatch 한테 어떻게 promise를 받는지 방법 알려줌
 
 ### React VS React Hooks
+![classVSfunctional](https://user-images.githubusercontent.com/42309919/100463624-7ad54600-310f-11eb-921b-3ba7fa71b8fe.PNG)
 
 React Component
 
@@ -163,3 +164,4 @@ React Component
 - 적은 기능
 
 Hooks update 후 함수형 컴포넌트 사용권장
+
