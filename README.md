@@ -134,3 +134,32 @@ dispatch 한테 어떻게 function을 받는지 방법 알려줌
 ### redux-thunk
 
 dispatch 한테 어떻게 promise를 받는지 방법 알려줌
+
+### React VS React Hooks
+
+React Component
+
+1. Class Component
+
+장점
+
+- 더 많은 기능
+
+  단점
+
+- 코드가 길어진다
+- 좀 더 복잡
+- 성능적으로 느려짐
+  -> 옛날에 쓰이던 방식
+
+2. Functional Component
+
+장점
+
+- 코드가 짧아진다
+- 좀 더 간단
+- 성능적으로 빨라짐
+  단점
+- 적은 기능
+
+Hooks update 후 함수형 컴포넌트 사용권장
