@@ -126,3 +126,11 @@ npx 장점
 
 1. Disk Space를 낭비하지 않을 수 있다.
 2. 항상 최신 버전을 사용할수 있다.
+
+### redux-promise
+
+dispatch 한테 어떻게 function을 받는지 방법 알려줌
+
+### redux-thunk
+
+dispatch 한테 어떻게 promise를 받는지 방법 알려줌
