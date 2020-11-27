@@ -15,6 +15,7 @@ npm install cookie-parser --save
 npm install concurrently --save  
 npm run start // node로 index.js 실행  
 npm run backend // nodemon으로 index.js 실행
+npm run dev // concurrently로 server, client 서버 동시 실행
 
 ### client directory
 
@@ -22,6 +23,7 @@ npx create-react-app .
 npm install react-router-dom --save
 npm install axios --save
 npm install http-proxy-middleware --save
+npm install antd --save
 
 ## 디렉토리
 
